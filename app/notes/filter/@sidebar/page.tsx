@@ -1,5 +1,5 @@
-import SidebarNotes from './SidebarNotes';
+// import SidebarNotes from './SidebarNotes';
 
 export default function SidebarPage() {
-  return <SidebarNotes />;
+  return null;
 }
