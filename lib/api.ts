@@ -12,11 +12,11 @@ export const noteApi = axios.create({
 });
 
 // ---- Типи параметрів ----
-
 export interface FetchNotesParams {
   page: number;
   perPage: number;
   search?: string;
+  tag?: string;
 }
 
 export interface CreateNoteParams {
@@ -30,7 +30,6 @@ export interface DeleteNoteParams {
 }
 
 // ---- Типи відповідей ----
-
 export interface FetchNotesResponse {
   notes: Note[];
   totalPages: number;
@@ -43,16 +42,24 @@ export type DeleteNoteResponse = Note;
 
 // Отримання списку нотаток
 export async function fetchNotes(params: FetchNotesParams): Promise<FetchNotesResponse> {
-  const response = await noteApi.get<FetchNotesResponse>('/notes', {
-    params: {
-      page: params.page,
-      perPage: params.perPage,
-      ...(params.search ? { search: params.search } : {}),
-    },
-  });
 
+  // console.log(">>> fetchNotes received params:", params); // DEBUG
+
+  const queryParams: any = {
+    page: params.page,
+    perPage: params.perPage,
+  };
+
+  if (params.search) queryParams.search = params.search;
+  if (params.tag && params.tag !== 'all') queryParams.tag = params.tag;
+
+  // console.log(">>> AXIOS REQUEST params:", queryParams); // DEBUG
+
+  const response = await noteApi.get('/notes', { params: queryParams });
   return response.data;
 }
+
+
 
 // Видалення нотатки
 export async function deleteNote(id: string): Promise<DeleteNoteResponse> {
@@ -66,7 +73,7 @@ export async function createNote(noteData: CreateNoteParams): Promise<CreateNote
   return response.data;
 }
 
-// ---- Fetch note by ID (потрібно для сторінки /notes/[id]) ----
+// Отримання однієї нотатки
 export async function fetchNoteById(id: string): Promise<Note> {
   const response = await noteApi.get<Note>(`/notes/${id}`);
   return response.data;

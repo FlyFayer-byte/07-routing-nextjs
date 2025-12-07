@@ -1,19 +1,20 @@
-import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
+import SidebarNotes from './filter/@sidebar/SidebarNotes';
 import NotesClient from './Notes.client';
-import { fetchNotes } from '@/lib/api';
 
-export default async function NotesPage() {
-  const queryClient = new QueryClient();
-
-  // Prefetch першої сторінки (або тої сторінки, яка за умовами завдання є дефолтною)
-  await queryClient.prefetchQuery({
-    queryKey: ['notes', 1, ''],
-    queryFn: () => fetchNotes({ page: 1, perPage: 12, search: '' }),
-  });
-
+export default function NotesPage() {
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <NotesClient />
-    </HydrationBoundary>
+    <>
+      
+        <div style={{ display: 'flex', padding: '20px' }}>
+          <aside style={{ width: '200px' }}>
+            <SidebarNotes />
+          </aside>
+
+          <main style={{ flex: 1 }}><NotesClient /></main>
+        </div>
+      
+      {/* <SidebarNotes/> */}
+      {/* <NotesClient /> */}
+    </>
   );
 }
