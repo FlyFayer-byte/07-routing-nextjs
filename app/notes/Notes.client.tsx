@@ -9,7 +9,7 @@ import SearchBox from '@/components/SearchBox/SearchBox';
 import Pagination from '@/components/Pagination/Pagination';
 import Modal from '@/components/Modal/Modal';
 import NoteForm from '@/components/NoteForm/NoteForm';
-import SidebarNotes from './filter/@sidebar/SidebarNotes';
+// import SidebarNotes from './filter/@sidebar/SidebarNotes';
 
 import { fetchNotes } from '@/lib/api';
 import css from './NotesPage.module.css';

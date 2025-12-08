@@ -1,21 +1,24 @@
+.container {
+  background-color: #333;
+}
 .header {
+  max-width: 1200px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  background-color: #333;
+  padding: 1rem 4rem;
+  margin: 0 auto;
   color: white;
-  /* margin: 0 auto; */
 }
 
-.header a {
+.headerLink {
   text-decoration: none;
   color: white;
   font-size: 1.5rem;
   font-weight: bold;
 }
 
-.header a:hover {
+.headerLink:hover {
   color: #ddd;
 }
 
@@ -27,12 +30,17 @@
   gap: 1rem;
 }
 
-.navigation li a {
+.navigationItem {
+  display: flex;
+  align-items: center;
+}
+
+.navigationLink {
   text-decoration: none;
   color: white;
   font-size: 1rem;
 }
 
-.navigation li a:hover {
+.navigationLink:hover {
   color: #ddd;
 }
