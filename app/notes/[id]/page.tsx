@@ -2,12 +2,12 @@
 // На цій сторінці відображається повна інформація про одну нотатку за її id.
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import { fetchNoteById } from '@/lib/api';
-import NoteDetailsClient from './NoteDetails.client';
+import NoteDetails from './NoteDetails.client';
 
 export default async function NoteDetailsPage({
   params,
 }: {
-    params: Promise<{ id: string }>;
+    params: { id: string };
 }) {
   const {id} = await params;
 
@@ -20,7 +20,7 @@ export default async function NoteDetailsPage({
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <NoteDetailsClient />
+      <NoteDetails id={params.id} />
     </HydrationBoundary>
   );
 }
