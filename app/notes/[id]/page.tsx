@@ -1,15 +1,15 @@
-// сторінка деталей однієї нотатки (динамічний маршрут).
-// На цій сторінці відображається повна інформація про одну нотатку за її id.
+// app/notes/[id]/page.tsx
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import { fetchNoteById } from '@/lib/api';
-import NoteDetails from './NoteDetails.client';
+import NoteDetailsClient from './NoteDetails.client';
 
-export default async function NoteDetailsPage({
-  params,
-}: {
-    params: { id: string };
-}) {
-  const {id} = await params;
+type PageProps = {
+  params: Promise<{ id: string }>;
+};
+
+
+export default async function NoteDetailsPage({ params }: PageProps) {
+  const { id } = await params;
 
   const queryClient = new QueryClient();
 
@@ -20,7 +20,7 @@ export default async function NoteDetailsPage({
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <NoteDetails id={params.id} />
+      <NoteDetailsClient id={id} />
     </HydrationBoundary>
   );
 }

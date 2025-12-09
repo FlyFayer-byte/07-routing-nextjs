@@ -47,7 +47,7 @@ export default function NoteList({ notes }: NoteListProps) {
             <span className={css.tag}>{note.tag}</span>
 
             <Link
-              href={`/notes/(.) ${note.id}`}
+              href={`/notes/${note.id}`}
               scroll={false}
               className={css.link}
             >
