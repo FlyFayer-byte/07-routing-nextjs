@@ -46,36 +46,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-
-// interface NotesLayoutProps {
-//   children: React.ReactNode;
-//   modal: React.ReactNode;
-// }
-
-// function NotesLayout({ children, modal }: NotesLayoutProps) {
-//   return (
-//     <>
-//       {children}
-//       <hr />
-//       {modal}
-//     </>
-//   );
-// }
-
-// // function NotesLayout({
-// //   children,
-// //   modal
-// // }: {
-// //   children: React.ReactNode;
-// //   modal: React.ReactNode;
-// // }) {
-// //   return (
-// //     <>
-// //       {children}
-// //       {modal}
-// //     </>
-// //   );
-// // }
-
-// export default NotesLayout;
