@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import NotesClient from "../../Notes.client";
+import NotesClient from "./Notes.client";
 
 export default function FilterPage() {
   const { slug } = useParams<{ slug: string[] }>();
