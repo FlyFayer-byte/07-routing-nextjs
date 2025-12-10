@@ -1,5 +1,6 @@
 import React from 'react';
-import css from '../NotesPage.module.css'
+import css from './[...slug]/NotesPage.module.css';
+
 
 export default function FilterLayout({
   children,

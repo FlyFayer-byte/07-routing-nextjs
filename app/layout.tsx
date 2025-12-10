@@ -1,5 +1,5 @@
 import './globals.css';
-import '@/app/notes/NotesPage.module.css'
+import '@/app/notes/filter/[...slug]/NotesPage.module.css'
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 
