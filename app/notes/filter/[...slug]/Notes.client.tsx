@@ -10,16 +10,20 @@ import Pagination from '@/components/Pagination/Pagination';
 import Modal from '@/components/Modal/Modal';
 import NoteForm from '@/components/NoteForm/NoteForm';
 // import SidebarNotes from './filter/@sidebar/SidebarNotes';
-
+import { useRouter } from 'next/navigation';
 import { fetchNotes } from '@/lib/api';
 import css from './NotesPage.module.css';
 
 interface Props {
-  tag?: string;
-  initialNotes?: any[];
+  tag?: string | null;
+  // Інтерфейс Props містить невикористаний пропс initialNotes,
+  // який не є обов’язковим і не входить до очікуваного API цього компонента.
+  // Це може спричинити плутанину, тому його слід видалити.
+
+  // initialNotes?: any[];
 }
 
-export default function NotesClient({ tag = 'all', initialNotes = [] }: Props) {
+export default function NotesClient({ tag = 'all' }: Props) {
   // console.log('>>> NotesClient tag =', tag);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -37,16 +41,18 @@ export default function NotesClient({ tag = 'all', initialNotes = [] }: Props) {
         page,
         perPage: 12,
         search: debouncedSearch || undefined,
-        tag: tag !== 'all' ? tag : undefined,
+        // tag: tag !== 'all' ? tag : undefined,
       }),
     placeholderData: keepPreviousData,
   });
 
-  const notes = (data?.notes ?? initialNotes).filter(note =>
-    tag === 'all' ? true : note.tag === tag
-  );
+  const notes = (data?.notes ?? []).filter(note => (tag === 'all' ? true : note.tag === tag));
 
   const totalPages = data?.totalPages ?? 0;
+  const router = useRouter();
+  const handleClose = () => {
+    router.back();
+  };
 
   return (
     <div className={css.container}>
@@ -76,7 +82,7 @@ export default function NotesClient({ tag = 'all', initialNotes = [] }: Props) {
         )}
 
         {isOpen && (
-          <Modal onClose={() => setIsOpen(false)}>
+          <Modal onClose={handleClose}>
             <NoteForm
               onSuccess={() => {
                 setIsOpen(false);

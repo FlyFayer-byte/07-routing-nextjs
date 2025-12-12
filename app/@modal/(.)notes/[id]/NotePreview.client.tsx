@@ -1,21 +1,27 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
+import { fetchNoteById } from '@/lib/api';
 import Modal from '@/components/Modal/Modal';
-import NoteDetailsClient from '@/app/notes/[id]/NoteDetails.client';
+import { useRouter } from 'next/navigation';
+import NoteDetailsClient from '../../../notes/[id]/NoteDetails.client'
 
-const NotePreviewClient = () => {
+export default function NotePreviewClient({ id }: { id: string }) {
   const router = useRouter();
 
-  const handleClose = () => {
-    router.back();
-  };
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['note', id],
+    queryFn: () => fetchNoteById(id),
+    refetchOnMount: false,
+  });
+
+  const handleClose = () => router.back();
 
   return (
     <Modal onClose={handleClose}>
-      <NoteDetailsClient />
+      {isLoading && <p>Loading...</p>}
+      {isError && <p>Error loading note.</p>}
+      {data && <NoteDetailsClient note={data} />}
     </Modal>
   );
-};
-
-export default NotePreviewClient;
+}
