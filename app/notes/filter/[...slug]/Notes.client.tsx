@@ -20,7 +20,7 @@ interface Props {
   // який не є обов’язковим і не входить до очікуваного API цього компонента.
   // Це може спричинити плутанину, тому його слід видалити.
 
-  // initialNotes?: any[];
+  // initialNotes?: Note[];
 }
 
 export default function NotesClient({ tag = 'all' }: Props) {
