@@ -10,9 +10,10 @@ import Pagination from '@/components/Pagination/Pagination';
 import Modal from '@/components/Modal/Modal';
 import NoteForm from '@/components/NoteForm/NoteForm';
 // import SidebarNotes from './filter/@sidebar/SidebarNotes';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import { fetchNotes } from '@/lib/api';
 import css from './NotesPage.module.css';
+// import { normalize } from 'path';
 
 interface Props {
   tag?: string | null;
@@ -23,8 +24,9 @@ interface Props {
   // initialNotes?: Note[];
 }
 
-export default function NotesClient({ tag = 'all' }: Props) {
+export default function NotesClient({ tag }: Props) {
   // console.log('>>> NotesClient tag =', tag);
+  const normalizedTag = tag ?? 'all';
 
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -35,23 +37,25 @@ export default function NotesClient({ tag = 'all' }: Props) {
   const queryClient = useQueryClient();
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ['notes', page, debouncedSearch, tag],
+    queryKey: ['notes', page, debouncedSearch, normalizedTag],
     queryFn: () =>
       fetchNotes({
         page,
         perPage: 12,
         search: debouncedSearch || undefined,
-        // tag: tag !== 'all' ? tag : undefined,
+        tag: normalizedTag !== 'all' ? normalizedTag : undefined,
       }),
     placeholderData: keepPreviousData,
   });
 
-  const notes = (data?.notes ?? []).filter(note => (tag === 'all' ? true : note.tag === tag));
+  const notes = data?.notes ?? [];
 
   const totalPages = data?.totalPages ?? 0;
-  const router = useRouter();
+
+  // const router = useRouter();
   const handleClose = () => {
-    router.back();
+    // router.back();
+    setIsOpen(false);
   };
 
   return (
